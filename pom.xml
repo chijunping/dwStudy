@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.tulun.study</groupId>
-    <artifactId>sparkStudy</artifactId>
+    <artifactId>dwStudy</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
 
@@ -14,7 +14,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <encoding>UTF-8</encoding>
         <scala.version>2.11.8</scala.version>
-        <spark.version>2.2.1</spark.version>
+        <spark.version>2.4.3</spark.version>
         <hadoop.version>2.7.2</hadoop.version>
     </properties>
 
@@ -47,45 +47,6 @@
             <artifactId>spark-hive_2.11</artifactId>
             <version>${spark.version}</version>
         </dependency>
-        <!--spark-streaming-->
-        <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-streaming_2.11</artifactId>
-            <version>${spark.version}</version>
-        </dependency>
-        <!--spark-streaming-flume-->
-        <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-streaming-flume_2.11</artifactId>
-            <version>${spark.version}</version>
-        </dependency>
-        <!--spark-streaming-kafka 对应spark1.5.2之前-->
-        <!--<dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-streaming-kafka_2.10</artifactId>
-            <version>1.6.0</version>
-        </dependency>-->
-        <!--spark-streaming-kafka 对应spark1.5.2之后-->
-        <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-streaming-kafka-0-8_2.11</artifactId>
-            <version>2.1.0</version>
-            <!--打包时该行注释必须放开，否则会与集群环境的kafka版本冲突-->
-            <!--<scope>provided</scope>-->
-        </dependency>
-        <!--elasticsearch-->
-        <!--
-        <dependency>
-            <groupId>org.elasticsearch</groupId>
-            <artifactId>elasticsearch</artifactId>
-            <version>2.3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.elasticsearch</groupId>
-            <artifactId>elasticsearch-spark_2.11</artifactId>
-            <version>2.3.0</version>
-        </dependency>
-        -->
         <!--hadoop-->
         <dependency>
             <groupId>org.apache.hadoop</groupId>
@@ -98,161 +59,116 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.38</version>
         </dependency>
-        <!--jedis-->
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>2.7.2</version>
-        </dependency>
         <!-- junit -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
         </dependency>
-        <!--Hbase-->
-        <!--<dependency>
-            <groupId>it.nerdammer.bigdata</groupId>
-            <artifactId>spark-hbase-connector_2.10</artifactId>
-            <version>1.0.3</version>
-        </dependency>
-        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.hbase/hbase-client &ndash;&gt;
-        <dependency>
-            <groupId>org.apache.hbase</groupId>
-            <artifactId>hbase-client</artifactId>
-            <version>1.2.0</version>
-        </dependency>
-        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.hbase/hbase-server &ndash;&gt;
-        <dependency>
-            <groupId>org.apache.hbase</groupId>
-            <artifactId>hbase-server</artifactId>
-            <version>1.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.hbase</groupId>
-            <artifactId>hbase-it</artifactId>
-            <version>1.2.0</version>
-        </dependency>-->
-        <dependency>
-            <groupId>com.aliyun.hbase</groupId>
-            <artifactId>alihbase-client</artifactId>
-            <version>1.1.3</version>
-        </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.23</version>
         </dependency>
-        <!--中文分词-->
-        <dependency>
-            <groupId>org.ansj</groupId>
-            <artifactId>ansj_seg</artifactId>
-            <version>5.1.3</version>
-        </dependency>
-        <!-- 哈工大分词 -->
-        <dependency>
-            <groupId>com.hankcs</groupId>
-            <artifactId>hanlp</artifactId>
-            <version>portable-1.6.3</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.databricks/spark-csv -->
-        <dependency>
-            <groupId>com.databricks</groupId>
-            <artifactId>spark-csv_2.11</artifactId>
-            <version>1.5.0</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apdplat/word -->
-        <dependency>
-            <groupId>org.apdplat</groupId>
-            <artifactId>word</artifactId>
-            <version>1.3</version>
-        </dependency>
-
-
     </dependencies>
 
-    <build>
-        <finalName>sparkStudy</finalName>
-        <sourceDirectory>src/main/scala</sourceDirectory>
-        <!--<testSourceDirectory>src/test/scala</testSourceDirectory>-->
-        <plugins>
-            <!-- build-helper-maven-plugin, 设置多个源文件夹 -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.4</version>
-                <executions>
-                    <execution>
-                        <id>add-source</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <!-- 我们可以通过在这里添加多个source节点，来添加任意多个源文件夹 -->
-                                <source>src/main/java</source>
-                                <source>src/main/scala</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
 
+    <build>
+        <finalName>dwtask-${env}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>dev/</exclude>
+                    <exclude>prod/</exclude>
+                    <exclude>test/</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources/${env}</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
             <plugin>
+                <!-- scala编译插件 -->
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
-                <version>3.3.1</version>
+                <version>3.2.1</version>
                 <executions>
                     <execution>
+                        <id>scala-compile-first</id>
+                        <phase>process-resources</phase>
                         <goals>
+                            <goal>add-source</goal>
                             <goal>compile</goal>
-                            <goal>testCompile</goal>
                         </goals>
-                        <configuration>
-                            <args>
-                                <!--<arg>-make:transitive</arg>-->
-                                <arg>-dependencyfile</arg>
-                                <arg>${project.build.directory}/.scala_dependencies</arg>
-                            </args>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.0</version>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <showWarnings>true</showWarnings>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
                 <executions>
                     <execution>
+                        <id>make-assembly</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>shade</goal>
+                            <goal>single</goal>
                         </goals>
-                        <configuration>
-                            <filters>
-                                <filter>
-                                    <artifact>*:*</artifact>
-                                    <excludes>
-                                        <exclude>META-INF/*.SF</exclude>
-                                        <exclude>META-INF/*.DSA</exclude>
-                                        <exclude>META-INF/*.RSA</exclude>
-                                    </excludes>
-                                </filter>
-                            </filters>
-                            <!--&lt;!&ndash;制定打包时的mian方法&ndash;&gt;
-                            <transformers>
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>cn.itcast.spark.WordCount</mainClass>
-                                </transformer>
-                            </transformers>-->
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <env>dev</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <env>test</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <env>prod</env>
+            </properties>
+        </profile>
+    </profiles>
 </project>
